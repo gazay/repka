@@ -1,38 +1,27 @@
-# Gon gem — get your Rails variables in your js
+# Repka gem — stats gathering for mongoid
 
-If you need to send some data to your js files and you don't want to do this with long way trough views and parsing - use this force!
+Repka will help you easily gather stats from controllers if you use mongoid
 
 ## Usage
 
-`app/views/layouts/application.html.erb`
-
-``` erb
-<head>
-  <title>some title</title>
-  <%= include_gon %>
-  <!-- include your action js code -->
-  ...
-```
-
-In action of your controller you put something like this:
+`app/controllers/your_controller.rb`
 
 ``` ruby
-@your_int = 123
-@your_array = [1,2]
-@your_hash = {'a' => 1, 'b' => 2}
-Gon.your_int = @your_int
-Gon.your_other_int = 345 + @your_int
-Gon.your_array = @your_array
-Gon.your_hash = @your_hash
+def index
+  rep :direct_visits # or inc :direct_visits
+  rep :visits, :source if params[:source]
+  rep :payed, nil, 3400.99 if params[:payed]
+  rep :payed_from, :paypal, 400 if params[:paypal]
+  rep :payed_from, :cash, 450.99 if params[:cash]
 ```
 
-In javascript file for view of this action write call to your variable:
+`app/controllers/admin_controller.rb`
 
-``` js
-alert(Gon.your_int)
-alert(Gon.your_other_int)
-alert(Gon.your_array)
-alert(Gon.your_hash)
+``` ruby
+def stats
+  @all_stats = repka_all_stats
+  @today_stats = repka_today_stats
+  @some_day_stats = RepkaStorage.first(:conditions => {:date => Date.new(2011,06,24)})
 ```
 
 ## Installation
@@ -40,22 +29,20 @@ alert(Gon.your_hash)
 Puts this line into `Gemfile` then run `$ bundle`:
 
 ``` ruby
-gem 'gon', '0.2.2'
+gem 'repka', '0.0.1'
 ```
 
 Or if you are old-school Rails 2 developer put this into `config/environment.rb` and run `$ rake gems:install`:
 
 ``` ruby
-config.gem 'gon', :version => '0.2.2'
+config.gem 'repka', :version => '0.0.1'
 ```
 
-Or manually install gon gem: `$ gem install gon`
+Or manually install gon gem: `$ gem install repka`
 
 ## Contributors
 
 * @gazay
-
-Special thanks to @brainopia, @kossnocorp and @ai.
 
 ## License
 

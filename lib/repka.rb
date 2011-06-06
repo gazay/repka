@@ -3,7 +3,7 @@
 require 'action_controller'
 require 'repka/base'
 
-class Repka
+class RepkaStorage
   include Mongoid::Document
 
   field :date, type: Date, default: -> { Date.today }
