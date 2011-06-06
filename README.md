@@ -60,7 +60,7 @@ Or if you are old-school Rails 2 developer put this into `config/environment.rb`
 config.gem 'repka', :version => '0.0.1'
 ```
 
-Or manually install gon gem: `$ gem install repka`
+Or manually install repka gem: `$ gem install repka`
 
 ## Contributors
 
