@@ -9,11 +9,28 @@ Repka will help you easily gather stats from controllers if you use mongoid
 ``` ruby
 def index
   rep :direct_visits # or inc :direct_visits
-  rep :visits, :source if params[:source]
+  rep :visits, params[:source] if params[:source]
   rep :payed, nil, 3400.99 if params[:payed]
   rep :payed_from, :paypal, 400 if params[:paypal]
   rep :payed_from, :cash, 450.99 if params[:cash]
 ```
+
+If all 'if' are true, first visit will be captured in structure
+
+``` ruby
+{
+    "direct_visits" => 1,
+           "visits" => {
+        "baikonur" => 1
+    },
+            "payed" => 3400.99,
+       "payed_from" => {
+        "paypal" => 400,
+          "cash" => 450.99
+    }
+}
+```
+
 
 `app/controllers/admin_controller.rb`
 
