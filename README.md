@@ -48,7 +48,7 @@ def stats
 
 ## Installation
 
-Puts this line into `Gemfile` then run `$ bundle`:
+Puts this line into `Gemfile` then run `bundle install`:
 
 ``` ruby
 gem 'repka', '0.0.1'
