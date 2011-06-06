@@ -37,8 +37,13 @@ If all 'if' are true, first visit will be captured in structure
 ``` ruby
 def stats
   @all_stats = repka_all_stats
+  @all_dates = @all_stats.map {|it| it.date}
+  @all_storages = @all_stats.map {|it| it.storage}
+  
   @today_stats = repka_today_stats
-  @some_day_stats = RepkaStorage.first(:conditions => {:date => Date.new(2011,06,24)})
+  @payed_from_paypal = @today_stats.storage['payed_from']['paypal']
+  
+  @some_day_stats = RepkaStorage.all(:conditions => { :date.gte => date_from, :date.lte => date_to })
 ```
 
 ## Installation
